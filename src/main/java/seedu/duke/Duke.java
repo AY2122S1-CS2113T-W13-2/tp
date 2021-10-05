@@ -2,6 +2,8 @@ package seedu.duke;
 
 import java.util.ArrayList;
 
+import java.util.Scanner;
+
 public class Duke {
     public static void main(String[] args) {
         Recipe recipeA = new Recipe("Caprese Salad");
@@ -75,5 +77,42 @@ public class Duke {
         filteredCBook.recipes.addAll(filteredR);
         System.out.println("Recipes containing the 'Vegan' tag: ");
         System.out.println(filteredCBook);
+
+
+        System.out.println("\n\n\n");
+        System.out.println("You can now add your own recipes!");
+
+        Parser parser = new Parser();
+
+        Scanner in = new Scanner(System.in);
+        String line  = in.nextLine();
+        String nameRecipe;
+        ArrayList<String> ingredientsList = null;
+        ArrayList<String> stepsList = null;
+
+        while (true) {
+            if (parser.parseCommand(line).equalsIgnoreCase("add")) {
+                nameRecipe = parser.parseName(line);
+                System.out.println("What are the Ingredients for this dish? Input them separated by “+”.");
+                line = in.nextLine();
+                ingredientsList = parser.parseIngredients(line);
+                System.out.println("What are the steps for this dish? Input them separated by “+”.");
+                line = in.nextLine();
+                stepsList = parser.parseSteps(line);
+                System.out.println("Added " + nameRecipe + " recipe! Yum!");
+            }
+            if (parser.parseCommand(line).equalsIgnoreCase("delete")) {
+                nameRecipe = parser.parseName(line);
+            }
+            if (parser.parseCommand(line).equalsIgnoreCase("check")) {
+                nameRecipe = parser.parseName(line);
+            }
+            if (parser.parseCommand(line).equalsIgnoreCase("exit")) {
+                System.out.println("Bye bye!");
+                break;
+            }
+            line = in.nextLine();
+        }
+
     }
 }
